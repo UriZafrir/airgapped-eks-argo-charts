@@ -1,10 +1,15 @@
-this repo contains several charts
-aws alb controller pointing to ingress-nginx with ingress.
-ingress nginx with allow-insecure
-argo cd with ingress and insecure - meaning it will receive http after terminating ssl at ALB.
-argocd-image-updater
-also a solution to add external git repo to code pipelines.
-
+## content:
+1. aws alb controller pointing to ingress-nginx for routing multiple ingresses
+2. ingress nginx with allow-insecure for argo cd
+3. argo cd with ingress and insecure - meaning it will receive http after terminating ssl at ALB.
+4. argocd-image-updater
+5. a solution to add external git repo to code pipelines.
+6. an example declarative app-of-apps which deploys two argocd charts. to be deployed with
+```
+kubectl apply -f /infra/argo-charts/root-app
+```
+This is the code for the secrets:
+```
 argocd-image-updater require generic secrets:
 
 kubectl create secret generic git-ssh-key-secret \
@@ -18,6 +23,7 @@ kubectl create secret generic apps-secret     --from-file=.dockerconfigjson=/hom
 kubectl create secret generic apps-secret \
     --from-file=.dockerconfigjson=/home/ec2-user/config.json \
     --type=kubernetes.io/dockerconfigjson
+```
 
 
 
@@ -27,12 +33,8 @@ kubectl create secret generic apps-secret \
 
 
 
-
-
-
-
-
-
+### this is the code to replace public images with your own
+```
 docker pull registry.k8s.io/ingress-nginx/controller:v1.10.1
 docker pull registry.k8s.io/ingress-nginx/kube-webhook-certgen:v1.4.1
 
@@ -72,3 +74,4 @@ docker push <your-private-registry>/eks/aws-load-balancer-controller:v2.8.1
 docker pull quay.io/argoprojlabs/argocd-image-updater
 docker tag 3d7e131f1431 <your-private-registry>/argoprojlabs/argocd-image-updater:v0.14.0
 docker push <your-private-registry>/argoprojlabs/argocd-image-updater:v0.14.0
+```

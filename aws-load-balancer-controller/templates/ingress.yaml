@@ -4,7 +4,7 @@ metadata:
   name: alb-ingress-connect-nginx
   namespace: ingress-controller
   annotations:
-    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:il-central-1:975050301675:certificate/b665b27a-525b-45e3-b5d6-416e662144ae
+    alb.ingress.kubernetes.io/certificate-arn: 
     alb.ingress.kubernetes.io/scheme: internal
     alb.ingress.kubernetes.io/healthcheck-protocol: HTTP
     alb.ingress.kubernetes.io/healthcheck-path: /healthz

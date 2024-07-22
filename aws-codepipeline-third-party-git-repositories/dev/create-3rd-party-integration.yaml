@@ -1,5 +1,5 @@
 export GIT_SOURCE_STACK_NAME="azure-devops-codepipeline-git-source"
-export S3_BUCKET_NAME="codepipeline-git-custom-action-020590447512"
+export S3_BUCKET_NAME="codepipeline-git-custom-action-"
 export ZIP_FILE_NAME="codepipeline_git.zip"
 aws cloudformation create-stack \
 --stack-name ${GIT_SOURCE_STACK_NAME} \
