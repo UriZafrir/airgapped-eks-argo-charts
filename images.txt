@@ -1,0 +1,2 @@
+public.ecr.aws/docker/library/redis
+quay.io/argoprojlabs/argocd-extension-installer

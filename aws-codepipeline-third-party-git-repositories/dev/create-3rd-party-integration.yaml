@@ -1,0 +1,13 @@
+export GIT_SOURCE_STACK_NAME="azure-devops-codepipeline-git-source"
+export S3_BUCKET_NAME="codepipeline-git-custom-action-020590447512"
+export ZIP_FILE_NAME="codepipeline_git.zip"
+aws cloudformation create-stack \
+--stack-name ${GIT_SOURCE_STACK_NAME} \
+--template-body file://$(pwd)/cfn/third_party_git_custom_action.yaml \
+--parameters ParameterKey=SourceActionVersion,ParameterValue=1 \
+ParameterKey=SourceActionProvider,ParameterValue=CustomSourceForGit \
+ParameterKey=GitPullLambdaSubnet,ParameterValue=${subnetId1}\\,${subnetId2},${subnetId3},${subnetId4} \
+ParameterKey=GitPullLambdaVpc,ParameterValue=${vpcId} \
+ParameterKey=LambdaCodeS3Bucket,ParameterValue=${S3_BUCKET_NAME} \
+ParameterKey=LambdaCodeS3Key,ParameterValue=${ZIP_FILE_NAME} \
+--capabilities CAPABILITY_IAM

@@ -1,0 +1,16 @@
+export SSH_URL=
+export BRANCH
+export SAMPLE_STACK_NAME=
+aws cloudformation create-stack \
+--stack-name ${SAMPLE_STACK_NAME} \
+--template-body file://$(pwd)/cfn/sample_pipeline_custom.yaml \
+--parameters ParameterKey=Branch,ParameterValue=master \
+ParameterKey=GitUrl,ParameterValue=${SSH_URL} \
+ParameterKey=Branch,ParameterValue=${BRANCH} \
+ParameterKey=SourceActionVersion,ParameterValue=1 \
+ParameterKey=SourceActionProvider,ParameterValue=CustomSourceForGit \
+ParameterKey=CodePipelineName,ParameterValue=fe \
+ParameterKey=SecretsManagerArnForSSHPrivateKey,ParameterValue=${SecretsManagerArn} \
+ParameterKey=GitWebHookIpAddress,ParameterValue=34.74.90.64/28 \
+--capabilities CAPABILITY_IAM
+
