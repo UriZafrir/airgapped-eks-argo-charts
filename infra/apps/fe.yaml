@@ -1,0 +1,35 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: fe
+  # You'll usually want to add your resources to the argocd namespace.
+  namespace: apps
+  # Add a this finalizer ONLY if you want these to cascade delete.
+spec:
+  # The project the application belongs to.
+  project: default
+
+  # Source of the application manifests
+  source:
+    repoURL: https://github.com/UriZafrir/airgapped-eks-argo-charts.git/argo-charts
+    targetRevision: HEAD
+    path: ./manifests/fe
+   
+  # Destination cluster and namespace to deploy the application
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: apps
+
+  # Sync policy
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true  
+    automated: # automated sync by default retries failed attempts 5 times with following delays between attempts ( 5s, 10s, 20s, 40s, 80s ); retry controlled using `retry` field.
+      prune: false # Specifies if resources should be pruned during auto-syncing ( false by default ).
+      selfHeal: false # Specifies if partial app sync should be executed when resources are changed only in target Kubernetes cluster and no git change detected ( false by default ).
+  
+  sourceType: git
+  sourceCredentials:
+    sshPrivateKeySecret:
+      name: git-ssh-key-secret
+      key: sshPrivateKey

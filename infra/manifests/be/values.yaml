@@ -1,0 +1,4 @@
+replicaCount: 1
+service:
+  port: 80
+registry: <your-private-registry>
